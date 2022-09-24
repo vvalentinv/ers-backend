@@ -9,7 +9,7 @@ class AuthService:
         self.user_dao = UserDao()
 
     def login(self, username, password):
-        user = self.user_dao.get_user_by_username(username)
+        user = self.user_dao. get_user_by_username(username)
         print(user)
         if not user:
             raise Unauthorized('Invalid username and/or password combination')
