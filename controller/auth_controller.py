@@ -26,7 +26,6 @@ def login():
 
         user = auth_service.login(username, password)
         resp = flask.Response("login")
-        # resp.headers["Access-Control-Allow-Origin"] = "*"
         resp.access_control_allow_origin = "https://ers-frontend.herokuapp.com"
         resp.headers['Access-Control-Allow-Credentials'] = 'true'
         resp.response = jsonify("msg", "Login successfully")
