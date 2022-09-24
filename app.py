@@ -12,7 +12,7 @@ from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt
 from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import set_access_cookies
-
+import os
 config = dotenv_values(".env")
 
 
@@ -52,4 +52,4 @@ if __name__ == '__main__':
             # Case where there is not a valid JWT. Just return the original response
             return response
 
-    app.run( port=8080, debug=True)
+    app.run(host='0.0.0.0', port=os.environ.get('PORT', '8080'), debug=True)
