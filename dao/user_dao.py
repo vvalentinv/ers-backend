@@ -2,19 +2,27 @@ from model.user import User
 from dotenv import dotenv_values
 import psycopg2
 
-config = dotenv_values(".env")
-db_name = config.get("dbname")
-db_user = config.get("user")
-db_password = config.get("password")
-port = config.get("port")
-host = config.get("host")
+import os
+import psycopg2
+
+DATABASE_URL = os.environ['DATABASE_URL']
+
+conn = psycopg2.connect(DATABASE_URL, sslmode='require')
+
+# config = dotenv_values(".env")
+# db_name = config.get("dbname")
+# db_user = config.get("user")
+# db_password = config.get("password")
+# port = config.get("port")
+# host = config.get("host")
 
 
 class UserDao:
 
     def get_all_users(self):
         # with psycopg2.connect(database=url.path[1:], user=url.username, password=url.password, host=url.hostname, port=url.port) as conn:
-        with psycopg2.connect(database=db_name, user=db_user, password=db_password, port=port, host=host) as conn:
+        # with psycopg2.connect(database=db_name, user=db_user, password=db_password, port=port, host=host) as conn:
+        with conn:
             with conn.cursor() as cur:
                 cur.execute("SELECT * FROM ers_users")
                 my_list_of_user_objs = []
@@ -34,7 +42,8 @@ class UserDao:
     def get_user_by_username(self, username):
         # with psycopg2.connect(database=url.path[1:], user=url.username, password=url.password, host=url.hostname,
         #                       port=url.port) as conn:
-        with psycopg2.connect(database=db_name, user=db_user, password=db_password, port=port, host=host) as conn:
+        with conn:
+        # with psycopg2.connect(database=db_name, user=db_user, password=db_password, port=port, host=host) as conn:
 
             with conn.cursor() as cur:
                 cur.execute("SELECT * FROM ers_users WHERE username = %s;", (username,))
